@@ -13,7 +13,8 @@ gem 'ip_info', git: "git@github.com:as181920/ip_info.git", branch: "master"
 ## Usage
 
 ```ruby
-IpInfo.city("180.175.136.84")
+IpInfo::CityReader.city("180.175.136.84").most_specific_subdivision.names["zh-CN"]
+# => "上海"
 ```
 
 ## Development
