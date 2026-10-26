@@ -5,7 +5,7 @@ class IpInfoTest < Minitest::Test
     refute_nil ::IpInfo::VERSION
   end
 
-  def test_it_does_something_useful
-    assert false
+  def test_city_database_can_be_queried
+    assert_equal "CN", ::IpInfo::CityReader.city("180.175.136.84").country.iso_code
   end
 end

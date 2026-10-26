@@ -7,7 +7,20 @@ lookup city names and so on
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ip_info', git: "git@github.com:as181920/ip_info.git", branch: "master"
+gem 'ip_info', git: "git@gitlab.dd-life.com:shared/ip_info.git", branch: "master"
+```
+
+## GeoIP database
+
+The database is stored with Git LFS. `.lfsconfig` uses the GitLab SSH remote so LFS can authenticate with the existing SSH key and obtain temporary authorization for its data transfer; a separate HTTPS password is not required. The key must have read access to `shared/ip_info`.
+
+Bundler Git caches may have an empty index. Before requiring the gem in CI, prepare the actual resolved dependency directory:
+
+```sh
+ip_info_path="$(bundle show ip_info)"
+git -C "$ip_info_path" read-tree HEAD
+git -C "$ip_info_path" lfs pull --include=data/GeoLite2-City.mmdb
+bundle exec ruby -rip_info -e 'puts "GeoIP database ready"'
 ```
 
 ## Usage
@@ -18,6 +31,8 @@ IpInfo::CityReader.city("180.175.136.84").most_specific_subdivision.names["zh-CN
 ```
 
 ## Development
+
+Development uses Ruby 4.0.9. The public gem keeps its existing minimum Ruby requirement.
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 

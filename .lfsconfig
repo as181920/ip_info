@@ -1,2 +1,2 @@
 [lfs]
-	url = https://gitlab.dd-life.com/shared/ip_info.git/info/lfs
+	url = git@gitlab.dd-life.com:shared/ip_info.git
